@@ -39,9 +39,24 @@ jobs:
           node-version: "20.15.1"
           cache-dependency-path: front/package-lock.json
 
+      # Get npm cache directory
+      - name: Get npm cache directory
+        id: npm-cache-dir
+        shell: bash
+        run: echo "dir=$(npm config get cache)" >> ${GITHUB_OUTPUT}
+
+      # npm cache
+      - uses: actions/cache@v4
+        id: npm-cache
+        with:
+          path: ${{ steps.npm-cache-dir.outputs.dir }}
+          key: ${{ runner.os }}-node-${{ hashFiles('front/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
       # cacheがhitしなかった場合はnpm ciを実行
       - name: Install dependencies
-        if: ${{ steps.setup_node_id.outputs.cache-hit != 'true' }}
+        if: ${{ steps.npm-cache.outputs.cache-hit != 'true' }}
         run: cd front && npm ci
 
       - name: eslint review setting
