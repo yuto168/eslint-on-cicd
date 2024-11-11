@@ -36,7 +36,10 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "20.15.1"
-          cache-dependency-path: frontend/package-lock.json
+          cache-dependency-path: front/package-lock.json
+
+      - name: Install dependencies
+        run: cd front && npm ci
 
       - name: eslint review setting
         uses: reviewdog/action-eslint@v1
@@ -44,5 +47,4 @@ jobs:
           github_token: ${{ secrets.github_token }}
           reporter: github-pr-review
           eslint_flags: "./**/*.{ts,tsx}"
-          fail_on_error: false
           workdir: front
