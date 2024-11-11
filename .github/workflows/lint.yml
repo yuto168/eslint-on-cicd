@@ -33,6 +33,7 @@ jobs:
         with:
           node-version: "20.15.1"
           cache-dependency-path: frontend/package-lock.lock
+      - run: npm i
 
       - name: eslint review setting
         uses: reviewdog/action-eslint@v1
@@ -41,6 +42,7 @@ jobs:
           reporter: github-pr-review
           eslint_flags: "front/**/*.{ts,tsx}"
           fail_on_error: true
+          workdir: front
 
       - name: eslint check
         run: |
