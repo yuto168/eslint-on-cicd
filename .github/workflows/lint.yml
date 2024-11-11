@@ -34,11 +34,14 @@ jobs:
           ref: ${{ github.ref }}
 
       - uses: actions/setup-node@v4
+        id: setup_node_id
         with:
           node-version: "20.15.1"
           cache-dependency-path: front/package-lock.json
 
+      # cacheがhitしなかった場合はnpm ciを実行
       - name: Install dependencies
+        if: ${{ steps.setup_node_id.outputs.cache-hit != 'true' }}
         run: cd front && npm ci
 
       - name: eslint review setting
