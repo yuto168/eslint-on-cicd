@@ -9,7 +9,7 @@ on:
     branches:
       - master
     paths:
-      - "frontend/**"
+      - "front/**"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
