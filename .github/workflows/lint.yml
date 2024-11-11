@@ -62,5 +62,5 @@ jobs:
 
       - name: check disk usage
         run: |
-          cd actions-runner/_Work
+          cd runner/work
           du -d 1 -h
