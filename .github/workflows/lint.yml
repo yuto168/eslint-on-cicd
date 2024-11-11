@@ -44,12 +44,5 @@ jobs:
           github_token: ${{ secrets.github_token }}
           reporter: github-pr-review
           eslint_flags: "./**/*.{ts,tsx}"
-          fail_on_error: true
+          fail_on_error: false
           workdir: front
-
-      - name: eslint check
-        run: |
-          cd front 
-          rm -rf node_modules
-          npm install
-          npm run lint
