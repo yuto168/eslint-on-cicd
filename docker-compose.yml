@@ -1,0 +1,41 @@
+services:
+  next:
+    build:
+      dockerfile: ./infra/next/Dockerfile
+    tty: true
+    working_dir: /app
+    volumes:
+      - ./front:/app
+    environment:
+      - WATCHPACK_POLLING=true
+    command: sh -c "npm install && npm run dev" 
+    networks:
+      - common
+    ports:
+      - "3000:3000"
+    container_name: next
+
+  playwright:
+    build:
+      dockerfile: ./infra/playwright/Dockerfile
+    tty: true
+    ipc: host 
+    volumes:
+      - ./playwright:/playwright
+      - playwright-node-modules:/playwright/node_modules
+      - /tmp/.X11-unix:/tmp/.X11-unix
+    working_dir: /playwright
+    environment:
+      DISPLAY: :0
+    container_name: playwright
+    depends_on:
+      - next
+    networks:
+      - common
+
+networks:
+  common:
+    driver: bridge 
+
+volumes:
+  playwright-node-modules:

@@ -1,0 +1,37 @@
+{
+  "name": "playwright",
+  "version": "1.0.0",
+  "scripts": {
+    "vrt": "playwright test",
+    "vrt-head": "playwright test --ui",
+    "ss-before": "npm run clean-ss-before && playwright test test/before",
+    "ss-after": "npm run clean-ss-after && playwright test test/after",
+    "reg": "reg-cli vrt/before/ vrt/after/ vrt/diff -R vrt/reports/report.html -J vrt/reports/report.json -S -M 0.10",
+    "clean-ss-after": "rimraf vrt/after",
+    "clean-ss-before": "rimraf vrt/before"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "reg-cli": "^0.18.1",
+    "rimraf": "^6.0.1",
+    "typescript": "^5.4.5"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.43.1",
+    "@tsconfig/recommended": "^1.0.6",
+    "@types/node": "^20.12.7",
+    "@typescript-eslint/eslint-plugin": "^7.7.0",
+    "@typescript-eslint/parser": "^7.7.0",
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-playwright": "^1.6.0",
+    "prettier": "^3.2.5",
+    "reg-keygen-git-hash-plugin": "^0.14.3",
+    "reg-notify-github-plugin": "^0.14.3",
+    "reg-publish-s3-plugin": "^0.14.3",
+    "reg-simple-keygen-plugin": "^0.14.2",
+    "reg-suit": "^0.14.4"
+  }
+}
