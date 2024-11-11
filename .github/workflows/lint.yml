@@ -36,7 +36,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "20.15.1"
-          cache-dependency-path: frontend/package-lock.lock
+          cache-dependency-path: frontend/package-lock.json
 
       - name: eslint review setting
         uses: reviewdog/action-eslint@v1
