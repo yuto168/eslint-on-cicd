@@ -48,7 +48,6 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
 
-      # cacheがhitしなかった場合はnpm ciを実行
       - name: Install dependencies
         if: ${{ steps.npm-cache.outputs.cache-hit != 'true' }}
         run: cd front && npm ci
@@ -60,3 +59,8 @@ jobs:
           reporter: github-pr-review
           eslint_flags: "./**/*.{ts,tsx}"
           workdir: front
+
+      - name: check disk usage
+        run: |
+          cd actions-runner/_Work
+          du -d 1 -h
