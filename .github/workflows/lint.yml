@@ -40,6 +40,7 @@ jobs:
           cache-dependency-path: front/package-lock.json
 
       # Get npm cache directory
+      # npm config get cacheでキャッシュディレクトリの場所を表示する
       - name: Get npm cache directory
         id: npm-cache-dir
         shell: bash
@@ -54,7 +55,14 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
 
+      # node_moduleがない問題を検証
+      - name: ls -la
+        run: |
+          ls -la
+          ls -la front
+
       # cacheがhitしなかった場合はnpm ciを実行
+      # cacheがhitしたのにeslintがないって怒られるのはなあぜ
       - name: Install dependencies
         if: ${{ steps.npm-cache.outputs.cache-hit != 'true' }}
         run: cd front && npm ci
