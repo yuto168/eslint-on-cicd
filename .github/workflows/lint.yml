@@ -1,0 +1,42 @@
+name: ESLint Check
+
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - ready_for_review
+    branches:
+      - master
+    paths:
+      - "frontend/**"
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  NODE_JS_VERSION: "20.15.1"
+
+jobs:
+  lint:
+    if: github.event.pull_request.draft == false
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20.15.1"
+          cache-dependency-path: frontend/package-lock.lock
+
+      - name: npm run lint
+        run: |
+          cd frontend 
+          rm -rf node_modules
+          npm install
+          npm run lint
