@@ -33,14 +33,13 @@ jobs:
         with:
           node-version: "20.15.1"
           cache-dependency-path: frontend/package-lock.lock
-      - run: ls -al
 
       - name: eslint review setting
         uses: reviewdog/action-eslint@v1
         with:
           github_token: ${{ secrets.github_token }}
           reporter: github-pr-review
-          eslint_flags: "front/**/*.{ts,tsx}"
+          eslint_flags: "./**/*.{ts,tsx}"
           fail_on_error: true
           workdir: front
 
