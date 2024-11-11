@@ -41,16 +41,16 @@ jobs:
 
       # Get npm cache directory
       # npm config get cacheでキャッシュディレクトリの場所を表示する
-      - name: Get npm cache directory
-        id: npm-cache-dir
-        shell: bash
-        run: echo "dir=$(npm config get cache)" >> ${GITHUB_OUTPUT}
+      # - name: Get npm cache directory
+      #   id: npm-cache-dir
+      #   shell: bash
+      #   run: echo "dir=$(npm config get cache)" >> ${GITHUB_OUTPUT}
 
       # npm cache
       - uses: actions/cache@v4
         id: npm-cache
         with:
-          path: ${{ steps.npm-cache-dir.outputs.dir }}
+          path: "front/node_modules"
           key: ${{ runner.os }}-node-${{ hashFiles('front/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
