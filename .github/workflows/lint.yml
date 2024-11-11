@@ -33,7 +33,7 @@ jobs:
         with:
           node-version: "20.15.1"
           cache-dependency-path: frontend/package-lock.lock
-      - run: npm i
+      - run: ls -al
 
       - name: eslint review setting
         uses: reviewdog/action-eslint@v1
