@@ -2,7 +2,7 @@ github action 上で eslint を実施するデモ
 
 ## 想定プロジェクト
 
-- サブディレクトリに frontend,playwright の 3 ディレクトリが存在するモノレポ構成(backend も存在する想定だが、デモのため外す。)
+- サブディレクトリに frontend,など存在するモノレポ構成(backend も存在する想定だが、デモのため外す。)
 
 ## デモの流れ
 

@@ -27,11 +27,6 @@
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-playwright": "^1.6.0",
-    "prettier": "^3.2.5",
-    "reg-keygen-git-hash-plugin": "^0.14.3",
-    "reg-notify-github-plugin": "^0.14.3",
-    "reg-publish-s3-plugin": "^0.14.3",
-    "reg-simple-keygen-plugin": "^0.14.2",
-    "reg-suit": "^0.14.4"
+    "prettier": "^3.2.5"
   }
 }
