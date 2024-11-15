@@ -1,0 +1,65 @@
+name: ESLint Check
+
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - ready_for_review
+    branches:
+      - master
+    paths:
+      - "front/**"
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  NODE_JS_VERSION: "20.15.1"
+
+jobs:
+  lint:
+    if: github.event.pull_request.draft == false
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    permissions:
+      contents: read
+      pull-requests: write
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
+
+      - uses: actions/setup-node@v4
+        id: setup_node_id
+        with:
+          node-version: "20.15.1"
+          cache-dependency-path: front/package-lock.json
+
+      # npm cache
+      - uses: actions/cache@v4
+        id: npm-cache
+        with:
+          path: "front/node_modules"
+          key: ${{ runner.os }}-node-${{ hashFiles('front/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install dependencies
+        if: ${{ steps.npm-cache.outputs.cache-hit != 'true' }}
+        run: cd front && npm ci
+
+      - name: eslint review setting
+        uses: reviewdog/action-eslint@v1
+        with:
+          github_token: ${{ secrets.github_token }}
+          reporter: github-pr-review
+          eslint_flags: "./**/*.{ts,tsx}"
+          workdir: front
+
+      - name: check disk usage
+        run: |
+          du -d 1 -h
